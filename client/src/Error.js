@@ -4,7 +4,7 @@ export default function Error() {
     return (
         <>
             <h1>
-                ERROR
+                ERROR 404 
             </h1>
         </>
     );

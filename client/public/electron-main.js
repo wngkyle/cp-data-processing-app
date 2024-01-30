@@ -21,21 +21,22 @@ const createWindow = () => {
         title: 'Data Processing App',
     });
 
-    if (isDev) { // Load URL if in development mode
+    if (!isDev) { // Load URL if in development mode
         mainWindow.loadURL('http://localhost:3000');
         console.log("DEVELOPMENT MODE");
     } else { // Load index.html file if in offline mode
         const __dirname = dirname(fileURLToPath(import.meta.url));
         console.log('__dirname: ', __dirname);
         mainWindow.loadURL(`file://${path.join(__dirname, './../build/index.html')}`);
+        console.log('Final file path: ', `file://${path.join(__dirname, './../build/index.html')}`);
         console.log("OFFLINE MODE");
     }
 
-    console.log('Server Loading...');
-    PythonShell.run('./../server/server.py', null).then(message => {
-        console.log('Finished');
-    })
-    console.log('Server Established...');
+    // console.log('Server Loading...');
+    // PythonShell.run('./../server/server.py', null).then(message => {
+    //     console.log('Finished');
+    // })
+    // console.log('Server Established...');
 
     mainWindow.on('closed', () => {
         mainWindow = null;
@@ -51,9 +52,10 @@ app.on('window-all-closed', () => {
         app.quit();
     }
     console.log("Finished");
-})
+});
 app.on('activate', () => {
     if (mainWindow === null) {
         createWindow();
     }
-})
+});
+

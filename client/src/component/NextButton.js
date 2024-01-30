@@ -1,5 +1,5 @@
 import React from "react";
-import { useStepsDispatchContext } from "../Context";
+import { useStepsDispatchContext } from "../StepContext";
 
 export default function NextButton() {
     return (

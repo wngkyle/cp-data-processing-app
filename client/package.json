@@ -5,7 +5,7 @@
   "homepage": "./",
   "version": "0.1.0",
   "private": true,
-  "main": "public/main.js",
+  "main": "public/electron-main.js",
   "type": "module",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
@@ -25,8 +25,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "electron-dev": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron-pack": "electron-builder -c.extraMetadata.main=build/electron.js",
-    "preelectron-pack": "react-scripts build"
+    "electron-pack": "electron-builder -c.extraMetadata.main=build/electron-main.js",
+    "preelectron-pack": "react-scripts build",
+    "start-server": "python3 ./../server/server.py"
   },
   "eslintConfig": {
     "extends": [

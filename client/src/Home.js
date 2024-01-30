@@ -1,7 +1,7 @@
 import React from "react";
 import PagePreset from "./component/PagePreset.js";
 import { useNavigate } from "react-router-dom";
-import { useStepsDispatchContext, useStateCurrentStepContext  } from "./Context.js";
+import { useStepsDispatchContext, useStateCurrentStepContext  } from "./StepContext.js";
 import "./Home.css";
 
 export default function Home() {

@@ -7,7 +7,7 @@ import FileUpload from './FileUpload.js';
 import InputDetail from './InputDetail.js';
 import Complete from './Complete.js';
 import Error from './Error.js';
-import { StepsProvider } from './Context.js';
+import { StepsProvider } from './StepContext.js';
 
 export default function App() {
   return (
