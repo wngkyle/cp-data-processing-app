@@ -1,11 +1,16 @@
 import React from "react"
+import PagePreset from "./component/PagePreset.js";
+import NavBar from "./component/NavBar.js";
 
 export default function InputDetail() {
     return (
         <>
-            <h1>
-                INPUT DETAIL 
-            </h1>
+            <PagePreset>
+                <NavBar />
+                <h1>
+                    PROCESS DETAIL
+                </h1>
+            </PagePreset>
         </>
     );
 };

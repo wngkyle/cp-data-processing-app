@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import PagePreset from "./component/PagePreset.js";
+import NavBar from "./component/NavBar.js";
+import { useNavigate } from "react-router-dom";
 
 
 export default function FileUpload({ onChange }) {
     const [data, setData] = useState('N/A');
+    const navigate = useNavigate();
 
     const makePostRequest = async (test) => {
         try {
@@ -22,6 +25,7 @@ export default function FileUpload({ onChange }) {
     return (
         <>
             <PagePreset>
+                <NavBar />
                 <span>
                     File Upload Page
                 </span>
@@ -33,6 +37,12 @@ export default function FileUpload({ onChange }) {
                 <span>
                     {data}
                 </span>
+                <button
+                    onClick={() => { navigate('/input-detail') }}
+                >
+                    NEXT
+                </button>
+
             </PagePreset>
         </>
     );

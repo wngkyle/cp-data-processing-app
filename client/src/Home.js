@@ -1,13 +1,23 @@
 import React from "react";
 import PagePreset from "./component/PagePreset.js";
 import { useNavigate } from "react-router-dom";
+import { useStepsDispatchContext, useStateCurrentStepContext  } from "./Context.js";
 import "./Home.css";
 
 export default function Home() {
     const navigate = useNavigate();
+    const stepsDispatch = useStepsDispatchContext();
+    const setCurrentStep = useStateCurrentStepContext();
 
     const handleEnterButtonClicked = () => {
         console.log('HOME -> File Upload');
+        stepsDispatch({
+            type: 'nextStep',
+            payload: {
+                step: 0,
+            }
+        });
+        setCurrentStep(1);
         navigate('/file-upload');
     }
 
