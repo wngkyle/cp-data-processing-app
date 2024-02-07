@@ -2,7 +2,7 @@ import React from "react"
 import PagePreset from "./component/PagePreset.js";
 import NavBar from "./component/NavBar.js";
 
-export default function InputDetail() {
+export default function ProcessDetail() {
     return (
         <>
             <PagePreset>

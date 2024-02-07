@@ -1,0 +1,30 @@
+.fileUploadContainer {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin: auto;
+    margin-top: 2.5rem;
+    border: 0.2rem solid blue
+}
+
+.currWorkDirectContainer {
+    display: flex;
+    margin-top: 1rem;
+    justify-content: center;
+}
+
+.arrowButtonGroup {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    margin-left: 4rem;
+    margin-right: 4rem;
+}
+
+.text1 {
+    @apply font-mono font-extrabold text-xl
+}
+
+.text2 {
+    @apply font-mono text-base
+}

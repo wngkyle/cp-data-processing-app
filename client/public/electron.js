@@ -2,7 +2,7 @@ import { app, BrowserWindow } from 'electron';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import isDev from 'electron-is-dev';
-import { PythonShell } from 'python-shell';
+import { PythonShell } from 'python-shell'
 
 let mainWindow = null
 
@@ -21,7 +21,7 @@ const createWindow = () => {
         title: 'Data Processing App',
     });
 
-    if (!isDev) { // Load URL if in development mode
+    if (isDev) { // Load URL if in development mode
         mainWindow.loadURL('http://localhost:3000');
         console.log("DEVELOPMENT MODE");
     } else { // Load index.html file if in offline mode
@@ -32,11 +32,11 @@ const createWindow = () => {
         console.log("OFFLINE MODE");
     }
 
-    // console.log('Server Loading...');
-    // PythonShell.run('./../server/server.py', null).then(message => {
-    //     console.log('Finished');
-    // })
-    // console.log('Server Established...');
+    console.log('Server Loading...');
+    PythonShell.run('./../server/server.py', null).then(message => {
+        console.log('Finished');
+    })
+    console.log('Server Established...');
 
     mainWindow.on('closed', () => {
         mainWindow = null;

@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import logo from './../assets/bright-toward-logo.png';
-import './PagePreset.css';
+import './css/PagePreset.css';
 
 export default function PagePreset({ children }) {
     const navigate = useNavigate();

@@ -40,7 +40,7 @@ function stepsReducer(currentSteps, action) {
 }
 
 export function StepsProvider({ children }) {
-    const [steps, stepsDispatch] = useReducer(stepsReducer, [0, 0, 0])
+    const [steps, stepsDispatch] = useReducer(stepsReducer, [0, 0, 0, 0])
     const [currStep, setCurrStep] = useState(0);
 
     return (
