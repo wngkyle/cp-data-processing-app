@@ -8,7 +8,7 @@ export default function Button({ children, onClick }) {
     return (
         <button 
             type="button" 
-            class="px-8 py-3 bg-blue-600 rounded-md text-white outline-none focus:ring-4 shadow-lg transform active:scale-75 transition-transform"
+            className="px-8 py-3 bg-blue-600 rounded-md text-white outline-none focus:ring-4 shadow-lg transform active:scale-75 transition-transform"
             onClick={handleButtonPressed}
         >
             {/* <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

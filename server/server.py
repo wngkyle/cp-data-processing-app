@@ -30,10 +30,11 @@ def directoryBackward():
 def directoryForward():
     data = request.json
     selectedFolder = data.get('selectedFolder')
-    url = '/' + selectedFolder['selectedFolder']
-    os.chdir(f'/{selectedFolder}')
+    path = f'./{selectedFolder}'
+    os.chdir(path)
     cwd = os.getcwd()
     return cwd
+
 
 def check_files(list):
     result = []

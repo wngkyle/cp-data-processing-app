@@ -7,18 +7,26 @@ import Button from "./component/Button.js";
 import { useNavigate } from "react-router-dom";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import { useStateCurrentStepContext } from "./context/StepContext.js";
+import { useSetDirIndexContext, useSetListOfDirContext, useDirIndexContext, useListOfDirContext } from "./context/DirectoryContext.js";
 import './css/FileUpload.css';
 
 export default function FolderSelection() {
     const [currWorkDirect, setCurrWorkDirect] = useState('');
-    const [listOfDir, setListOfDir] = useState([]);
-    const [dirIndex, setDirIndex] = useState(-1);
+    const listOfDir = useListOfDirContext();
+    const setListOfDir = useSetListOfDirContext();
+    const dirIndex = useDirIndexContext();
+    const setDirIndex = useSetDirIndexContext();
+
     const setCurrStep = useStateCurrentStepContext();
     const navigate = useNavigate();
 
     const handleNextButtonPressed = () => {
-        setCurrStep(1);
-        navigate('/process-detail');
+        if (dirIndex === -1) {
+            alert("Please Select a Folder")
+        } else {
+            setCurrStep(1);
+            navigate('/process-detail');
+        }
     }
 
     const handleBackButtonPressed = () => {
@@ -41,18 +49,22 @@ export default function FolderSelection() {
     }
 
     const handleDirectoryForward = async () => {
-        makePostRequest();
-        const folder = listOfDir[dirIndex];
-        try {
-            const cwd = await axios.post('http://127.0.0.1:5000/directory-forward', {
-                selectedFolder: folder,
-            });
-            setCurrWorkDirect(cwd);
-            const updatedListOfDir = await axios.get('http://127.0.0.1:5000/get-list-of-folders', { withCredentials: false });
-            setListOfDir(updatedListOfDir.data);
-            setDirIndex(-1);
-        } catch (err) {
-            console.log(err)
+        if (dirIndex === -1) {
+            alert("Please Select a Folder")
+        } else {
+            const folder = listOfDir[dirIndex];
+            try {
+                const cwd = await axios.post('http://127.0.0.1:5000/directory-forward', {
+                    selectedFolder: folder,
+                }, {
+                    withCredentials: false
+                });
+                setCurrWorkDirect(cwd.data);
+                const updatedListOfDir = await axios.get('http://127.0.0.1:5000/get-list-of-folders', { withCredentials: false });
+                setListOfDir(updatedListOfDir.data);
+            } catch (err) {
+                console.log(err)
+            }
         }
     }
 
@@ -60,7 +72,6 @@ export default function FolderSelection() {
         try {
             const cwd = await axios.get('http://127.0.0.1:5000/get-current-working-directory', { withCredentials: false });
             setCurrWorkDirect(cwd.data);
-            console.log(currWorkDirect);
             const listOfDir = await axios.get('http://127.0.0.1:5000/get-list-of-folders', { withCredentials: false });
             setListOfDir(listOfDir.data);
         } catch (error) {
@@ -75,7 +86,7 @@ export default function FolderSelection() {
     const renderListOfDir = listOfDir.map((item, id) => {
         const index = id;
         return (
-            <RadioButton name={item} id={index} dirSelected={handleDirIndexSelected} />
+            <RadioButton name={item} key={index} id={index} dirSelected={handleDirIndexSelected} />
         )
     })
 
@@ -113,7 +124,6 @@ export default function FolderSelection() {
                     <div className="contentContainer mt-6">
                         <span className="text1 mt-5">
                             Select a folder:
-                            {''}
                         </span>
                         <div className="mt-4 dirContainer">
                             {renderListOfDir}
