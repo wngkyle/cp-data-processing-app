@@ -7,7 +7,8 @@ import React, {
 
 const CurrentStepContext = createContext(0);
 const useSatetForCurrentStepContext = createContext(null);
-const StepsContext = createContext([0, 0, 0]);
+
+const StepsContext = createContext([0, 0, 0, 0]);
 const StepsDispatchContext = createContext(null);
 
 export function useCurrentStepContext() {

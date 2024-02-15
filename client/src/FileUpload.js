@@ -2,36 +2,86 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import PagePreset from "./component/PagePreset.js";
 import NavBar from "./component/NavBar.js";
+import RadioButton from "./component/RadioButton.js";
+import Button from "./component/Button.js";
 import { useNavigate } from "react-router-dom";
-import './css/FileUpload.css'
+import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
+import { useStateCurrentStepContext } from "./context/StepContext.js";
+import './css/FileUpload.css';
 
 export default function FolderSelection() {
-    const [currWorkDirect, setCurrWorkDirect] = useState('')
-    const [listOfDir, setListOfDir] = useState(['hello', 'hello', 'hello'])
+    const [currWorkDirect, setCurrWorkDirect] = useState('');
+    const [listOfDir, setListOfDir] = useState([]);
+    const [dirIndex, setDirIndex] = useState(-1);
+    const setCurrStep = useStateCurrentStepContext();
     const navigate = useNavigate();
 
-    const makePostRequest = async (test) => {
-        console.log("Button clicked")
+    const handleNextButtonPressed = () => {
+        setCurrStep(1);
+        navigate('/process-detail');
+    }
+
+    const handleBackButtonPressed = () => {
+        setCurrStep(0);
+        navigate('/');
+    }
+
+    const handleDirectoryBackward = async () => {
+        if (currWorkDirect !== '/') {
+            try {
+                const cwd = await axios.get('http://127.0.0.1:5000/directory-backward', { withCredentials: false});
+                setCurrWorkDirect(cwd.data);
+                const updatedListOfDir = await axios.get('http://127.0.0.1:5000/get-list-of-folders', { withCredentials: false });
+                setListOfDir(updatedListOfDir.data);
+                setDirIndex(-1);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    }
+
+    const handleDirectoryForward = async () => {
+        makePostRequest();
+        const folder = listOfDir[dirIndex];
         try {
-            const cwd = await axios.get('http://127.0.0.1:5000/get-current-working-directory', { withCredentials: false })
+            const cwd = await axios.post('http://127.0.0.1:5000/directory-forward', {
+                selectedFolder: folder,
+            });
+            setCurrWorkDirect(cwd);
+            const updatedListOfDir = await axios.get('http://127.0.0.1:5000/get-list-of-folders', { withCredentials: false });
+            setListOfDir(updatedListOfDir.data);
+            setDirIndex(-1);
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    const makePostRequest = async (test) => {
+        try {
+            const cwd = await axios.get('http://127.0.0.1:5000/get-current-working-directory', { withCredentials: false });
             setCurrWorkDirect(cwd.data);
-            const listOfDir = await axios.get('http://127.0.0.1:5000/get-list-of-folders', { withCredentials: false })
-            setListOfDir(listOfDir.data)
+            console.log(currWorkDirect);
+            const listOfDir = await axios.get('http://127.0.0.1:5000/get-list-of-folders', { withCredentials: false });
+            setListOfDir(listOfDir.data);
         } catch (error) {
             console.error(error);
         }
     }
 
-    const renderListOfDir = listOfDir.map((item) => {
+    const handleDirIndexSelected = (index) => {
+        setDirIndex(index);
+    }
+
+    const renderListOfDir = listOfDir.map((item, id) => {
+        const index = id;
         return (
-            <button>
-                {item}
-            </button>
+            <RadioButton name={item} id={index} dirSelected={handleDirIndexSelected} />
         )
     })
 
     useEffect(() => {
-        makePostRequest()
+        makePostRequest();
+        setCurrStep(0);
     }, [])
     // By passing an empty dependency array, the useEffect() will only run after initial render
     // Passing no dependency array at all, the useEffect() will run after every single render
@@ -41,71 +91,47 @@ export default function FolderSelection() {
             <PagePreset>
                 <NavBar />
                 <div className="fileUploadContainer">
-                    <span className="text1">
-                        Current Working Directory:
-                        {''}
-                    </span>
-                    <div className="currWorkDirectContainer">
-                        <span className="text2">
-                            {currWorkDirect}
+                    <div className="contentContainer">
+                        <span className="text1">
+                            Current Working Directory:
+                            {''}
                         </span>
+                        <div className="currWorkDirectContainer">
+                            <span className="text2 text-md">
+                                {currWorkDirect}
+                            </span>
+                        </div>
+                        <div className="arrowButtonGroup">
+                            <Button onClick={handleDirectoryBackward}>
+                                <FaArrowLeft size={20}/>
+                            </Button>
+                            <Button onClick={handleDirectoryForward}>
+                                <FaArrowRight size={20}/>
+                            </Button>   
+                        </div>
                     </div>
-                    <div className="arrowButtonGroup">
-                        <button 
-                            type="button" 
-                            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 
-                            focus:outline-none focus:ring-blue-300 font-medium rounded-lg 
-                            text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600
-                            dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-28 justify-center"
-                        >
-                            <svg 
-                                class="w-5 h-5 rotate-180" 
-                                aria-hidden="true" 
-                                xmlns="http://www.w3.org/2000/svg" 
-                                fill="none" 
-                                viewBox="0 0 14 10"
-                            >
-                                <path 
-                                    stroke="currentColor" 
-                                    stroke-linecap="round" 
-                                    stroke-linejoin="round" 
-                                    stroke-width="2" 
-                                    d="M1 5h12m0 0L9 1m4 4L9 9"
-                                />
-                            </svg>
-                        </button>
-                        <button 
-                            type="button" 
-                            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 
-                            focus:outline-none focus:ring-blue-300 font-medium rounded-lg 
-                            text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600
-                            dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-28 justify-center"
-                            onClick={makePostRequest}
-                        >
-                            <svg 
-                                class="w-5 h-5" 
-                                aria-hidden="true" 
-                                xmlns="http://www.w3.org/2000/svg" 
-                                fill="none" 
-                                viewBox="0 0 14 10"
-                            >
-                                <path 
-                                    stroke="currentColor" 
-                                    stroke-linecap="round" 
-                                    stroke-linejoin="round" 
-                                    stroke-width="2" 
-                                    d="M1 5h12m0 0L9 1m4 4L9 9"
-                                />
-                            </svg>
-                        </button>
+                    <div className="contentContainer mt-6">
+                        <span className="text1 mt-5">
+                            Select a folder:
+                            {''}
+                        </span>
+                        <div className="mt-4 dirContainer">
+                            {renderListOfDir}
+                        </div>
                     </div>
-                    <span className="text1 mt-5">
-                        Select a folder:
-                        {''}
-                    </span>
-                    {renderListOfDir}
+                    <div className="buttonGroup">
+                        <Button onClick={handleBackButtonPressed}>
+                            <span className="text-xl text2">
+                                BACK
+                            </span>
+                        </Button>
+                        <Button onClick={handleNextButtonPressed}>
+                            <span className="text-xl text2">
+                                NEXT
+                            </span>
+                        </Button>
+                    </div>
                 </div>
-
             </PagePreset>
         </>
     );
