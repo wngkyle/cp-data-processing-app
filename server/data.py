@@ -1,7 +1,19 @@
 fileDetail = {
     'selected_folder': '',
-    'all_column_headers': [],
-    'selected_column': {},
+    'all_column_headers': [
+        'Isc_20mA', 
+        'Turn_off_80mA_', 
+        'Turn_off_80mA_HL', 
+        'Rf', 
+        'Rr'
+    ],
+    'selected_column': {
+        'Isc_20mA': 0,
+        'Turn_off_80mA_': 0,
+        'Turn_off_80mA_HL': 0,
+        'Rf': 0,
+        "Rr": 0,
+    },
     'fdpath': '',
     'isc_fdpath': '',
     'isc_fdpath_wmap': '',
