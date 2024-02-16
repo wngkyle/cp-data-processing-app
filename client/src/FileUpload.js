@@ -20,6 +20,7 @@ export default function FolderSelection() {
     const setCurrStep = useStateCurrentStepContext();
     const navigate = useNavigate();
 
+    // Handle next and back button
     const handleNextButtonPressed = () => {
         if (dirIndex === -1) {
             alert("Please Select a Folder")
@@ -28,12 +29,12 @@ export default function FolderSelection() {
             navigate('/process-detail');
         }
     }
-
     const handleBackButtonPressed = () => {
         setCurrStep(0);
         navigate('/');
     }
 
+    // Handle directory backward when user goes back up one directory
     const handleDirectoryBackward = async () => {
         if (currWorkDirect !== '/') {
             try {
@@ -48,6 +49,7 @@ export default function FolderSelection() {
         }
     }
 
+    // Handle directory forward when user decide to nevigate into a folder
     const handleDirectoryForward = async () => {
         if (dirIndex === -1) {
             alert("Please Select a Folder")
@@ -68,6 +70,7 @@ export default function FolderSelection() {
         }
     }
 
+    // Run after initial rendering
     const makePostRequest = async (test) => {
         try {
             const cwd = await axios.get('http://127.0.0.1:5000/get-current-working-directory', { withCredentials: false });
@@ -79,10 +82,12 @@ export default function FolderSelection() {
         }
     }
 
+    // Handle selected directory by setting its respective index
     const handleDirIndexSelected = (index) => {
         setDirIndex(index);
     }
 
+    // Render the list of available directories
     const renderListOfDir = listOfDir.map((item, id) => {
         const index = id;
         return (

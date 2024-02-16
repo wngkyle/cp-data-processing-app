@@ -35,6 +35,12 @@ def directoryForward():
     cwd = os.getcwd()
     return cwd
 
+@app.route('./set-folder-and-create', methods=['POST'])
+def setFolderAndCreate():
+    data = request.json
+    finalFolder = data.get('finalFolder')
+    
+
 
 def check_files(list):
     result = []

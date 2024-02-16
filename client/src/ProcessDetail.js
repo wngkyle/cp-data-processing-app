@@ -7,12 +7,15 @@ import RadioButton2 from "./component/RadioButton2.js";
 import Button from "./component/Button.js";
 import './css/ProcessDetail.css';
 import { useStateCurrentStepContext } from './context/StepContext.js';
+import { useColumnStepContext, useSetColumnStepContext } from "./context/ColumnStepContext.js";
 import { AiOutlineClose } from "react-icons/ai";
 
 
 
 export default function ProcessDetail() {
+    const columnStep = useColumnStepContext();
     const setCurrStep = useStateCurrentStepContext();
+    const setColumnStep = useSetColumnStepContext();
     const navigate = useNavigate();
 
     // Column select variables 
@@ -25,12 +28,12 @@ export default function ProcessDetail() {
     // Fast track variables
     const [fastTrack, setFastTrack] = useState(false);
 
-    // Step variables 
-    const [isc20mAStep, setIsc20mAStep] = useState();
-    const [turnOff80mAStep, setTurnOff80mAStep] = useState();
-    const [turnOff80mAHLStep, setTurnOff80mAHLStep] = useState();
-    const [rfStep, setRfStep] = useState();
-    const [rrStep, setRrStep] = useState();
+    // // Step variables 
+    // const [isc20mAStep, setIsc20mAStep] = useState();
+    // const [turnOff80mAStep, setTurnOff80mAStep] = useState();
+    // const [turnOff80mAHLStep, setTurnOff80mAHLStep] = useState();
+    // const [rfStep, setRfStep] = useState();
+    // const [rrStep, setRrStep] = useState();
 
     // Handle column select variables
     const handleIsc20mAPressed = () => {
@@ -52,13 +55,20 @@ export default function ProcessDetail() {
     // Handle fast track variable
     const handleFastTrackPressed = () => {
         setFastTrack(true);
+        setColumnStep({...columnStep, 
+            'fast-track': true
+        });
     }
     const handleNoFastTrackPressed = () => {
         setFastTrack(false);
+        setColumnStep({...columnStep, 
+            'fast-track': false
+        });
     }
 
     // Handle next and back button
     const handleNextButtonPressed = () => {
+        console.log(columnStep);
         setCurrStep(2);
         navigate('/folder-processing');
     }
@@ -69,19 +79,29 @@ export default function ProcessDetail() {
 
     // Handle step input
     const isc20mAUpdateText = (data) => {
-        setIsc20mAStep(data.target.value);
+        setColumnStep({...columnStep, 
+            'Isc_20mA': data.target.value
+        });
     }
     const turnOff80mAUpdateText = (data) => {
-        setTurnOff80mAStep(data.target.value);
+        setColumnStep({...columnStep, 
+            'Turn_off_80mA_': data.target.value
+        });
     }
     const turnOff80mAHLUpdateText = (data) => {
-        setTurnOff80mAHLStep(data.target.value);
+        setColumnStep({...columnStep,
+            'Turn_off_80mA_HL': data.target.value
+        });
     }
     const rfUpdateText = (data) => {
-        setRfStep(data.target.value);
+        setColumnStep({...columnStep,
+            'Rf': data.target.value
+        });
     }
     const rrUpdateText = (data) => {
-        setRrStep(data.target.value);
+        setColumnStep({...columnStep,
+            'Rr': data.target.value
+        });
     }
 
     // Render step input 
@@ -96,7 +116,7 @@ export default function ProcessDetail() {
                 } 
                 { turnOff80mA === true && (
                         <label className='ms-2 text-lg font-medium text-gray-900 ml-14'>
-                            Turn_off_80mA_ Step Size : <input name='turn_off_80mA_ step size' className='rounded-lg pl-2' onChange={turnOff80mAUpdateText} />
+                            Turn_off_80mA_ Step Size : <input name='turn_off_80mA_ step size' className='rounded-lg pl-2' onChange={turnOff80mAUpdateText} required='require'/>
                         </label>
                     )
                 }
@@ -209,7 +229,7 @@ export default function ProcessDetail() {
                             • Double check the process details including column{'(s)'} to process and step size
                             <br/>
                             • Ensure your fast track choice, normal process time and fast track can differ up to 
-                            10 minutes of process time. THATS A LOT OF TIME!!
+                            10 minutes of process time, and THATS A LOT OF TIME!!!
                         </span>
                     </div>
                     <div className="buttonGroup">
