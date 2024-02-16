@@ -86,7 +86,7 @@ export default function FolderSelection() {
     const renderListOfDir = listOfDir.map((item, id) => {
         const index = id;
         return (
-            <RadioButton name={item} key={index} id={index} dirSelected={handleDirIndexSelected} />
+            <RadioButton name={item} key={index} id={index} buttonPressed={handleDirIndexSelected} />
         )
     })
 
