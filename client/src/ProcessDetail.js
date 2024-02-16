@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
+import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import PagePreset from "./component/PagePreset.js";
 import NavBar from "./component/NavBar.js";
@@ -27,13 +28,6 @@ export default function ProcessDetail() {
 
     // Fast track variables
     const [fastTrack, setFastTrack] = useState(false);
-
-    // // Step variables 
-    // const [isc20mAStep, setIsc20mAStep] = useState();
-    // const [turnOff80mAStep, setTurnOff80mAStep] = useState();
-    // const [turnOff80mAHLStep, setTurnOff80mAHLStep] = useState();
-    // const [rfStep, setRfStep] = useState();
-    // const [rrStep, setRrStep] = useState();
 
     // Handle column select variables
     const handleIsc20mAPressed = () => {
@@ -67,12 +61,47 @@ export default function ProcessDetail() {
     }
 
     // Handle next and back button
-    const handleNextButtonPressed = () => {
-        console.log(columnStep);
+    const handleNextButtonPressed = async () => {
+        // Set selected columns
+        const selectComlumns = {};
+        if (isc20mA) {
+            selectComlumns['Isc_20mA'] = columnStep['Isc_20mA'];
+        } 
+        if (turnOff80mA) {
+            selectComlumns['Turn_off_80mA_'] = columnStep['Turn_off_80mA_'];
+        }
+        if (turnOff80mAHL) {
+            selectComlumns['Turn_off_80mA_HL'] = columnStep['Turn_off_80mA_HL'];
+        }
+        if (rf) {
+            selectComlumns['Rf'] = columnStep['Rf'];
+        }
+        if (rr) {
+            selectComlumns['Rr'] = columnStep['Rr'];
+        }
+        const selectedColumsArray = await axios.post('http://127.0.0.1:5000/set-selected-columns', {
+            'selectedColumns': selectComlumns
+        }, { 
+            withCredentials: false
+        });
+        console.log('Selected Columns: ', selectedColumsArray.data);
+        // Set fast track option 
+        let tempFastTrack = 'false';
+        if (fastTrack) {
+            tempFastTrack = 'true';
+        }
+        const rush = await axios.post('http://127.0.0.1:5000/set-fast-track', {
+            'fastTrack': tempFastTrack
+        }, { 
+            withCredentials: false
+        });
+        console.log('Fast Track: ', rush.data);
+        console.log('Process Detail -> Folder Processing');
         setCurrStep(2);
         navigate('/folder-processing');
     }
     const handleBackButtonPressed = () => {
+        console.log('File Upload <- Process Detail');
         setCurrStep(0);
         navigate('/folder-selection');
     }

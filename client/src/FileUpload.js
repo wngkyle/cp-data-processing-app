@@ -21,15 +21,29 @@ export default function FolderSelection() {
     const navigate = useNavigate();
 
     // Handle next and back button
-    const handleNextButtonPressed = () => {
+    const handleNextButtonPressed = async () => {
         if (dirIndex === -1) {
             alert("Please Select a Folder")
         } else {
+            try {
+                // Pass final selected folder to backend
+                // Return path of the newly created folder
+                const finalFolderPath = await axios.post('http://127.0.0.1:5000/set-folder-and-create', {
+                    'finalFolder': listOfDir[dirIndex]
+                }, { 
+                    withCredentials: false
+                });
+                console.log('Final Folder Path: ', finalFolderPath.data);
+            } catch (err) {
+                console.log(err);
+            }
             setCurrStep(1);
+            console.log('File Upload -> Process Detail');
             navigate('/process-detail');
         }
     }
     const handleBackButtonPressed = () => {
+        console.log('HOME <- File Upload');
         setCurrStep(0);
         navigate('/');
     }
