@@ -1,13 +1,21 @@
+// Import utilities
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
+
+// Import components 
 import PagePreset from "./component/PagePreset.js";
 import NavBar from "./component/NavBar.js";
 import RadioButton from "./component/RadioButton.js";
 import Button from "./component/Button.js";
-import { useNavigate } from "react-router-dom";
-import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
+
+// Import context variables
 import { useStateCurrentStepContext } from "./context/StepContext.js";
+import { useSetColumnStepContext } from "./context/ColumnStepContext.js";
 import { useSetDirIndexContext, useSetListOfDirContext, useDirIndexContext, useListOfDirContext } from "./context/DirectoryContext.js";
+
+// CSS 
 import './css/FileUpload.css';
 
 export default function FolderSelection() {
@@ -16,6 +24,7 @@ export default function FolderSelection() {
     const setListOfDir = useSetListOfDirContext();
     const dirIndex = useDirIndexContext();
     const setDirIndex = useSetDirIndexContext();
+    const setColumnStep = useSetColumnStepContext();
 
     const setCurrStep = useStateCurrentStepContext();
     const navigate = useNavigate();
@@ -38,6 +47,14 @@ export default function FolderSelection() {
                 console.log(err);
             }
             setCurrStep(1);
+            setColumnStep({
+                'Isc_20mA': 0,
+                'Turn_off_80mA_': 0,
+                'Turn_off_80mA_HL': 0,
+                'Rf': 0,
+                'Rr': 0,
+                'fast-track' : false,
+            });
             console.log('File Upload -> Process Detail');
             navigate('/process-detail');
         }

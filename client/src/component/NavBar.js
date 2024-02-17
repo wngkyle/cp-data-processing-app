@@ -38,7 +38,7 @@ export default function NavBar() {
 
     return (
         <div className="navBarContainer">
-            <ol className="flex items-center w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base">
+            <ol className="flex items-center w-full text-center text-gray-500 dark:text-gray-400">
                 <li className={currStep === 0 ? ("dark:text-blue-500 flex md:w-full items-center after:content-[''] after:w-full after:h-1 after:border-b dark:after:border-gray-400 text") : (
                     "flex md:w-full items-center after:content-[''] after:w-full after:h-1 after:border-b dark:after:border-gray-400 text"
                 )}>

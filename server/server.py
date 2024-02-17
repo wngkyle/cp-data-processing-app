@@ -4,7 +4,6 @@ from openpyxl import Workbook
 from main import reading_and_processing
 from data import fileDetail, Isc_20mA_data, Turn_off_80mA_data, Turn_off_80mA_HL_data, Rf_data, Rr_data
 from modified_step import Isc_20_mA_step_size, Turn_off_80mA_step_size, Turn_off_80mA_HL_step_size, Rf_step_size, Rr_step_size
-
 import os, json
 
 app = Flask(__name__)

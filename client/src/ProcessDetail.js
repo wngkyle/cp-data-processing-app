@@ -1,23 +1,34 @@
+// Import utilities
 import React, { useState } from "react";
 import axios from 'axios';
+import { AiOutlineClose } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+
+// Import components
 import PagePreset from "./component/PagePreset.js";
 import NavBar from "./component/NavBar.js";
 import RadioButton from "./component/RadioButton.js";
 import RadioButton2 from "./component/RadioButton2.js";
 import Button from "./component/Button.js";
-import './css/ProcessDetail.css';
+
+// Import context variables
 import { useStateCurrentStepContext } from './context/StepContext.js';
 import { useColumnStepContext, useSetColumnStepContext } from "./context/ColumnStepContext.js";
-import { AiOutlineClose } from "react-icons/ai";
+import { useFastTrackContext, useSetFastTrackContext } from "./context/FastTrackContext.js";
 
-
+// CSS
+import './css/ProcessDetail.css';
 
 export default function ProcessDetail() {
+    // React navigate item
+    const navigate = useNavigate();
+
+    // Context Variables
     const columnStep = useColumnStepContext();
     const setCurrStep = useStateCurrentStepContext();
     const setColumnStep = useSetColumnStepContext();
-    const navigate = useNavigate();
+    const fastTrack = useFastTrackContext();
+    const setFastTrack = useSetFastTrackContext();
 
     // Column select variables 
     const [isc20mA, setIsc20mA] = useState(false);
@@ -25,9 +36,6 @@ export default function ProcessDetail() {
     const [turnOff80mAHL, setTurnOff80mAHL] = useState(false);
     const [rf, setRf] = useState(false);
     const [rr, setRr] = useState(false);
-
-    // Fast track variables
-    const [fastTrack, setFastTrack] = useState(false);
 
     // Handle column select variables
     const handleIsc20mAPressed = () => {
