@@ -11,22 +11,22 @@ export default function NavBar() {
     const navigate = useNavigate();
 
     const handleFolderSelectionStepPressed = () => {
-        setCurrStep(0);
-        navigate('/folder-selection');
+        // setCurrStep(0);
+        // navigate('/folder-selection');
     }
 
     const handleProcessDetailStepPrcessed = () => {
-        setCurrStep(1);
-        navigate('/process-detail');
+        // setCurrStep(1);
+        // navigate('/process-detail');
     }
 
     const handleFolerProcessingStepPrcessed = () => {
-        setCurrStep(2);
-        navigate('/folder-processing');
+        // setCurrStep(2);
+        // navigate('/folder-processing');
     }
     const handleDoneStepPressed = () => {
-        setCurrStep(3);
-        navigate('/complete');
+        // setCurrStep(3);
+        // navigate('/complete');
     }
 
     // stepsDispatch({

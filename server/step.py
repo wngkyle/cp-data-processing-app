@@ -26,6 +26,7 @@ def Isc_20_mA_step_size():
         val = round(val, 2)
     Isc_20mA_data['x_Isc_20mA'][Isc_20mA_data['len_Isc_20mA'] - 1] = f'> {preVal}'
 
+
 # Argument : n/a
 # Prompt the user to select the step size for Turn_off_80mA, empty val will set to default value
 def Turn_off_80mA_step_size():

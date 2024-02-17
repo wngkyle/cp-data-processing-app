@@ -10,7 +10,6 @@ from data import fileDetail, Isc_20mA_data, Turn_off_80mA_data, Turn_off_80mA_HL
 def Isc_20_mA_step_size():
     # Computing the number of x values for Isc_20mA and Turn_off_80mA
     Isc_20mA_data['len_Isc_20mA'] = math.floor((Isc_20mA_data['data_uLimit_Isc_20mA'] - Isc_20mA_data['data_lLimit_Isc_20mA']) / Isc_20mA_data['step_size_Isc_20mA'])
-    
     # Isc_20mA
     preVal = 0
     val = Isc_20mA_data['step_size_Isc_20mA']

@@ -5,6 +5,11 @@ from variables import fileDetail
 from util import folder_selection, display_column_names, custom_folder_selection
 from step import Isc_20_mA_step_size, Turn_off_80mA_step_size, Turn_off_80mA_HL_step_size, Rf_step_size, Rr_step_size
 
+####################################################################################################################################
+#                                                          EXEC                                                                    #
+####################################################################################################################################
+
+
 def main():
     print()
     custom_folder_selection()
