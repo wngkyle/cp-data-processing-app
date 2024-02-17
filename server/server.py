@@ -4,7 +4,7 @@ from openpyxl import Workbook
 from main import reading_and_processing
 from data import fileDetail, progressTracker, Isc_20mA_data, Turn_off_80mA_data, Turn_off_80mA_HL_data, Rf_data, Rr_data
 from modified_step import Isc_20_mA_step_size, Turn_off_80mA_step_size, Turn_off_80mA_HL_step_size, Rf_step_size, Rr_step_size
-import os, json
+import os, shutil
 import matplotlib.pyplot as plt
 import matplotlib
 
@@ -187,6 +187,19 @@ def getProgress():
     result = [count, progressStatements]
     return result
 
+@app.route('/remove-processed-folder-content')
+def removeProcessedFolderContent():
+    finalFolderPath = fileDetail['fdpath']
+    shutil.rmtree(finalFolderPath)
+    os.mkdir(finalFolderPath)
+    return 'Folder Content Deleted'
+
+@app.route('/remove-folder')
+def removeFolder():
+    finalFolderPath = fileDetail['fdpath']
+    os.rmdir(finalFolderPath)
+    return 'Folder Deleted'
+    
 @app.route('/set-test', methods=['POST'])
 def testRoute():
     data = request.json.get('data')
