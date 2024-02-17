@@ -108,8 +108,10 @@ export default function ProcessDetail() {
         setCurrStep(2);
         navigate('/folder-processing');
     }
-    const handleBackButtonPressed = () => {
+    const handleBackButtonPressed = async () => {
         console.log('File Upload <- Process Detail');
+        const result = await axios.get('http://127.0.0.1:5000/remove-folder', { withCredentials: false });
+        console.log('Back Button Pressed: ', result.data);
         setCurrStep(0);
         navigate('/folder-selection');
     }

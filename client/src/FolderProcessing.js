@@ -37,11 +37,27 @@ export default function FolderProcessing() {
 
     const handleRunButtonPressed = async () => {
         if (!runButtonPressed) {
-            setRunButtonPressed(true);
+            setRunButtonPressed(!runButtonPressed);
             const result = await axios.get('http://127.0.0.1:5000/exec', { withCredentials: false });
             console.log('Result: ', result.data);
             setAllDone(true);
+        } else {
+            const result = await axios.get('http://127.0.0.1:5000//remove-processed-folder-content', { withCredentials: false });
+            console.log('Cancel Button Pressed:', result.data);
+            setRunButtonPressed(!runButtonPressed);
         }
+    }
+
+    const handleNextButtonPressed = () => {
+        console.log('Process Detail -> Done');
+        setCurrStep(3);
+        navigate('/complete');
+    }
+
+    const handleBackButtonPressed = () => {
+        console.log('Process Detail <- Folder Processing');
+        setCurrStep(1);
+        navigate('/process-detail');
     }
 
     useEffect(() => {
@@ -144,6 +160,18 @@ export default function FolderProcessing() {
                             </div>
                         </div>
                     )}
+                    <div className="buttonGroup">
+                        <Button onClick={handleBackButtonPressed}>
+                            <span className="text-xl text2">
+                                BACK
+                            </span>
+                        </Button>
+                        <Button onClick={handleNextButtonPressed}>
+                            <span className="text-xl text2">
+                                NEXT
+                            </span>
+                        </Button>
+                    </div>
                 </div>
             </PagePreset>
         
