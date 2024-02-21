@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from openpyxl import Workbook
 from main import reading_and_processing
-from data import fileDetail, progressTracker, Isc_20mA_data, Turn_off_80mA_data, Turn_off_80mA_HL_data, Rf_data, Rr_data
+from data import fileDetail, progressTracker, Isc_20mA_data, Turn_off_80mA_data, Turn_off_80mA_HL_data, Rf_data, Rr_data, processed
 from modified_step import Isc_20_mA_step_size, Turn_off_80mA_step_size, Turn_off_80mA_HL_step_size, Rf_step_size, Rr_step_size
 import os, shutil
 import matplotlib.pyplot as plt
@@ -12,6 +12,7 @@ import matplotlib
 #                                                         SERVER                                                                   #
 ####################################################################################################################################
 
+# Set Flask server over here
 app = Flask(__name__)
 CORS(
     app,
@@ -22,11 +23,13 @@ CORS(
 # def initialize():
 #     plt.figure(figsize=(10, 6))
 
+# Retrieving current working directory
 @app.route('/get-current-working-directory')
 def getCurrWork():
     cwd = os.getcwd()
     return cwd
 
+# Retrieving list of available folders in current working directory 
 @app.route('/get-list-of-folders')
 def getListOfDir():
     cwd = getCurrWork()
@@ -34,12 +37,23 @@ def getListOfDir():
     listOfDir = check_files(listOfDir)
     return jsonify(listOfDir)
 
+def check_files(list):
+    result = []
+    for file in list:
+        if 'Processed' in file.name or file.name in processed or file.is_dir() == False or file.name == '.git' or file.name == '__pycache__' or file.name == '$RECYCLE.BIN' or file.name == '.ipynb_checkpoints' or file.name == '.jpeg File':
+            pass
+        else:
+            result.append(file.name)
+    return result
+
+# Navigate backward one directory
 @app.route('/directory-backward')
 def directoryBackward():
     os.chdir('../')
     cwd = os.getcwd()
     return cwd
 
+# Navigate forward one directory 
 @app.route('/directory-forward', methods=['POST'])
 def directoryForward():
     data = request.json
@@ -49,11 +63,13 @@ def directoryForward():
     cwd = os.getcwd()
     return cwd
 
+# Set folder variable and create a respective folder in current working directory
 @app.route('/set-folder-and-create', methods=['POST'])
 def setFolderAndCreate():
     data = request.json
     selectedFolder = data.get('finalFolder')
     cwd = os.getcwd()
+    processed.append(selectedFolder)
     selectedFolderPath = f'{cwd}/{selectedFolder}'
     fileDetail['selected_folder'] = selectedFolderPath
     finalFolderPath = f'{fileDetail["selected_folder"]}_Processed'
@@ -61,15 +77,20 @@ def setFolderAndCreate():
     os.mkdir(fileDetail['fdpath'])
     return finalFolderPath
 
+# Set the selected columns from frontend user interface
 @app.route('/set-selected-columns', methods=['POST'])
 def setSelectedColumns():
     data = request.json
     selectedColumns = data.get('selectedColumns')
+    for key in fileDetail['selected_column']:
+        fileDetail['selected_column'][key] = 0
     for col in list(selectedColumns.keys()):
         fileDetail['selected_column'][col] = 1
     setStepSize(selectedColumns)
     return selectedColumns
 
+# Helper function for setSelectedColumns()
+# Set step size for each selected columns
 def setStepSize(selectedColumns):
     temp = list(selectedColumns.keys())
     if ('Isc_20mA' in temp):
@@ -83,7 +104,7 @@ def setStepSize(selectedColumns):
     if ('Rr' in temp):
         Rr_data['step_size_rr'] = float(selectedColumns['Rr'])
 
-
+# Determine whether the current process is fast-track / rush piece
 @app.route('/set-fast-track', methods=['POST'])
 def setFastTrack():
     data = request.json
@@ -98,10 +119,14 @@ def setFastTrack():
 # Check if step size number needs to be converted into integer after sending it from frontend
 # Check default, if users enter nothing, what is the default value for step size
     # might have to modify frontend as well, maybe show the default in the input tag as well
+
+# This is the main execution function 
+# It calls functions in helper, util, step, and main file
 @app.route('/exec')
 def exec():
     stage = []
     stage.append('**** Enter exec() in server ****')
+    stage.append(fileDetail['selected_column'])
     try :
         stage.append(' - File Creation Start')
         if (fileDetail['selected_column']['Isc_20mA'] == 1):
@@ -179,7 +204,8 @@ def exec():
         stage.append('Error when preparing to enter reading_and_processing(): Error occur because of calling reading_and_processing() or in the function itself in server.py or main.py')
     stage.append('SUCCESSFUL')
     return stage
-        
+
+# Retrieve the current progress of the process, sends the progress back to frontend
 @app.route('/get-progress')
 def getProgress():
     count = progressTracker['count']
@@ -187,6 +213,7 @@ def getProgress():
     result = [count, progressStatements]
     return result
 
+# Remove the created content in the folder but doesn't delete the folder if the process is canceled half way
 @app.route('/remove-processed-folder-content')
 def removeProcessedFolderContent():
     finalFolderPath = fileDetail['fdpath']
@@ -194,12 +221,117 @@ def removeProcessedFolderContent():
     os.mkdir(finalFolderPath)
     return 'Folder Content Deleted'
 
+# Remove the folder entirely 
 @app.route('/remove-folder')
 def removeFolder():
     finalFolderPath = fileDetail['fdpath']
+    processed.pop()
     os.rmdir(finalFolderPath)
     return 'Folder Deleted'
-    
+
+# Retrieve new folder path
+@app.route('/get-new-folder-path')
+def getNewFolderPath():
+    finalFolderPath = fileDetail['fdpath']
+    return finalFolderPath
+
+# Reset all used variables
+@app.route('/reset-all-data')
+def resetAllData():
+    fileDetail = {
+        'selected_folder': '',
+        'all_column_headers': [
+            'Isc_20mA', 
+            'Turn_off_80mA_', 
+            'Turn_off_80mA_HL', 
+            'Rf', 
+            'Rr'
+        ],
+        'selected_column': {
+            'Isc_20mA': 0,
+            'Turn_off_80mA_': 0,
+            'Turn_off_80mA_HL': 0,
+            'Rf': 0,
+            "Rr": 0,
+        },
+        'fdpath': '',
+        'isc_fdpath': '',
+        'isc_fdpath_wmap': '',
+        'turn_off_fdpath': '',
+        'turn_off_fdpath_wmap': '',
+        'turn_off_HL_fdpath': '',
+        'turn_off_HL_fdpath_wmap': '',
+        'rf_fdpath': '',
+        'rf_fdpath_wmap': '',
+        'rr_fdpath': '',
+        'rr_fdpath_wmap': '',
+        'all_files': [],
+        'file_download_path': '',
+        'first_df': {},
+        'second_df': {},
+        'df': {},
+        'fast_track': '',
+    }
+    progressTracker = {
+        'count': 0,
+        'progressStatements': []
+    }
+    processed = []
+    Isc_20mA_data = {
+        'step_size_Isc_20mA': 0.15,
+        'len_Isc_20mA': 0,
+        'x_Isc_20mA': [],
+        'y_Isc_20mA': [],
+        'uLimit_Isc_20mA': 10,
+        'lLimit_Isc_20mA': 2,
+        'data_uLimit_Isc_20mA': 10,
+        'data_lLimit_Isc_20mA': 0,
+    }
+    Turn_off_80mA_data = {
+        'step_size_Turn_off_80mA': 0.8,
+        'len_Turn_off_80mA': 0,
+        'x_Turn_off_80mA': [],
+        'y_Turn_off_80mA': [],
+        'uLimit_Turn_off_80mA': 500,
+        'lLimit_Turn_off_80mA': 0,
+        'data_uLimit_Turn_off_80mA': 60,
+        'data_lLimit_Turn_off_80mA': 0,
+    }
+
+    Turn_off_80mA_HL_data = {
+        'step_size_Turn_off_80mA_HL': 0.5,
+        'len_Turn_off_80mA_HL': 0,
+        'x_Turn_off_80mA_HL': [],
+        'y_Turn_off_80mA_HL': [],
+        'uLimit_Turn_off_80mA_HL': 20,
+        'lLimit_Turn_off_80mA_HL': -20,
+        'data_uLimit_Turn_off_80mA_HL': 10,
+        'data_lLimit_Turn_off_80mA_HL': -10,
+    }
+    Rf_data = {
+        'step_size_Rf': 0.2,
+        'len_Rf': 0,
+        'x_Rf': [],
+        'y_Rf': [],
+        'uLimit_Rf': 20,
+        'lLimit_Rf': 10,
+        'data_uLimit_Rf': 20,
+        'data_lLimit_Rf': 10,
+    }
+    Rr_data = {
+        'step_size_Rr': 0.2,
+        'len_Rr': 0,
+        'x_Rr': [],
+        'y_Rr': [],
+        'uLimit_Rr': 20,
+        'lLimit_Rr': 10,
+        'data_uLimit_Rr': 20,
+        'data_lLimit_Rr': 10,
+    }
+    result = 'All Variables reset'
+    return result
+
+############################################### Routes below are for testing purposes ###############################################
 @app.route('/set-test', methods=['POST'])
 def testRoute():
     data = request.json.get('data')
@@ -238,15 +370,6 @@ def testPlt():
     plt.savefig(path + '/test.png')
 
     return 'sucessful'
-
-def check_files(list):
-    result = []
-    for file in list:
-        if file.is_dir() == False or file.name == '.git' or file.name == '__pycache__' or file.name == '$RECYCLE.BIN' or file.name == '.ipynb_checkpoints' or file.name == '.jpeg File':
-            pass
-        else:
-            result.append(file.name)
-    return result
 
 if __name__ == '__main__':
     app.run(debug=True)

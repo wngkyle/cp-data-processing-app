@@ -51,6 +51,7 @@ export default function FolderProcessing() {
     const handleNextButtonPressed = () => {
         console.log('Process Detail -> Done');
         setCurrStep(3);
+        setProgress([]);
         navigate('/complete');
     }
 
@@ -67,9 +68,13 @@ export default function FolderProcessing() {
             setCount(retrievedProgress.data[0]);
             setProgress(retrievedProgress.data[1]); 
         }
-
-        const intervalID = setInterval(getProgress, 5000);
-        return () => clearInterval(intervalID);
+        getProgress();
+        const intervalID = setInterval(getProgress, 3000);
+        return () =>{
+            setCount(0);
+            setProgress([]);
+            clearInterval(intervalID);
+        }
     },[])
 
     const renderSelectedColumns = Object.entries(columnStep).map(([key, value], index) => {

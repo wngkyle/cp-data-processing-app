@@ -42,6 +42,8 @@ progressTracker = {
     'progressStatements': []
 }
 
+processed = []
+
 Isc_20mA_data = {
     'step_size_Isc_20mA': 0.15,
     'len_Isc_20mA': 0,

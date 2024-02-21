@@ -1,5 +1,5 @@
 // Import utilities
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { AiOutlineClose } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
@@ -70,6 +70,11 @@ export default function ProcessDetail() {
 
     // Handle next and back button
     const handleNextButtonPressed = async () => {
+        console.log('Isc', isc20mA);
+        console.log('turnoff80', turnOff80mA);
+        console.log('turnoff80hl', turnOff80mAHL);
+        console.log('rf', rf);
+        console.log('rr', rr);
         // Set selected columns
         const selectComlumns = {};
         if (isc20mA) {
@@ -180,7 +185,7 @@ export default function ProcessDetail() {
             </div>
         );
     }
-
+    
     return (
         <>
             <PagePreset>
