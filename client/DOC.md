@@ -15,14 +15,14 @@
     - Column Steps 
         - Stores the step size of the selected columns
         - Structure : 
-            `const columnSteps = {
+            '''const columnSteps = {
                 'Isc_20mA': 0,
                 'Turn_off_80mA_': 0,
                 'Turn_off_80mA_HL': 0,
                 'Rf': 0,
                 'Rr': 0,
                 'fast-track' : false,
-            };`
+            };'''
         
 
 
