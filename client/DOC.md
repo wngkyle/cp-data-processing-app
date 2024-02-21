@@ -88,7 +88,21 @@
         - Prints `HOME <- File Upload`
     - `handleDirectoryBackward()`
         - Set current working directory one level back up using GET(directory-backward) 
+        - Update the current working directory context
         - GET(get-list-of-folders) fetch list of available folders in current working directory
+        - Update list of directories context
+        - Set selected radio button index to -1
+        - Print selected radio button index 
+    - `handleDirectoryForward()`
+        - POST(directory-forward) navigate current working directory forward
+        - Set current working directory path
+        - GET(get-list-of-folders) get list of available folder in current working directory
+        - Set list of directories
+    - `makePostRequest()` 
+        - Only run once after initial rendering
+        - Could be ommitted
+        - GET(get-current-working-directory)
+        - GET(get-list-of-folders)
 
 ### ProcessingDetail.js
 
