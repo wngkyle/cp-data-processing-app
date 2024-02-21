@@ -5,15 +5,18 @@
 - This page takes care of all the routing and context provider 
 - Routing Library : [React Router](https://reactrouter.com/en/main)
 - Routing pages as follow
-    - Home : /
-    - FolderSelection : /folder-selection
-    - ProcessDetail : /process-detail
-    - FolderProcessing : /folder-processing
-    - Complete : /complete
-    - Error : *
+    - Home : `/`
+    - FolderSelection : `/folder-selection`
+    - ProcessDetail : `/process-detail`
+    - FolderProcessing : `/folder-processing`
+    - Complete : `/complete`
+    - Error : `*`
 - Context
     - Column Steps 
         - Stores the step size of the selected columns
+        - Variable : `useColumnStepContext()`
+        - Set function : `useSetColumnStepContext()`
+        - Tag : `<ColumnStepProvider>`
         - Structure : 
             ```
             const columnSteps = {
@@ -25,8 +28,30 @@
                 'fast-track' : false,
             };
             ```
-        
-
+    - Step
+        - Stores current stage in user interface, use for NavBar component
+        - Variable : `useCurrentStepContext()` 
+        - Set function : `useStateCurrentStepContext()`
+        - Structure : integer variable
+        - Tag : `<StepsProvider>`
+    - Fast Track
+        - Stores user input for fast track selection
+        - Variable: `useFastTrackContext()`
+        - Set function : `useSetFastTrackContext()`
+        - Tag : `<FastTrackContextProvider>`
+        - Structure : boolean variable
+    - Directory 
+        - Tag : `<DirectoryProvider>`
+        - List of Directory
+            - Stores all available directory in the current working directory
+            - Variable : `useListOfDirContext()`
+            - Set function : `useSetListOfDirContext()`
+            - Structure : list variable
+        - Directory Index
+            - Stores the idnex of the selected directory 
+            - Variable : `useDirIndexContext()`
+            - Set function : `useSetDirIndexContext()`
+            - Structure : integer variable 
 
 ### Home
 
