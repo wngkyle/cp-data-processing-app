@@ -1,7 +1,6 @@
 ## Client
 
-### App
-
+### App.js
 - This page takes care of all the routing and context provider 
 - Routing Library : [React Router](https://reactrouter.com/en/main)
 - Routing pages as follow
@@ -11,7 +10,7 @@
     - FolderProcessing : `/folder-processing`
     - Complete : `/complete`
     - Error : `*`
-- Context
+- Context Overview
     - Column Steps 
         - Stores the step size of the selected columns
         - Variable : `useColumnStepContext()`
@@ -32,8 +31,8 @@
         - Stores current stage in user interface, use for NavBar component
         - Variable : `useCurrentStepContext()` 
         - Set function : `useStateCurrentStepContext()`
-        - Structure : integer variable
         - Tag : `<StepsProvider>`
+        - Structure : integer variable
     - Fast Track
         - Stores user input for fast track selection
         - Variable: `useFastTrackContext()`
@@ -53,15 +52,47 @@
             - Set function : `useSetDirIndexContext()`
             - Structure : integer variable 
 
-### Home
+### Home.js
+- Landing page when run
+- Icon on top left returns back to home/landing page
+- Enter and Begin button to begin processing
+- Context
+    - `useStateCurrentStepContext()`
+- Functions
+    - `handleEnterButtonClicked()`
+        - For handling enter button pressed
+        - Navigate to the next page FolderSelection
+        - Set context variable step to 0
+        - Prints `HOME -> File Upload`
 
+### FolderSelection.js
+- Allow user to select the desire folder to process
+- Context 
+    - `useListOfDirContext()`
+    - `useSetListOfDirContext()`
+    - `useDirIndexContext()`
+    - `useSetDirIndexContext()`
+    - `useSetColumnStepContext()`
+    - `useStateCurrentStepContext()`
+- Variable
+    - `currWorkDirect` : stores file path of current working directory
+- Functions
+    - `handleNextButtonPressed()`
+        - Check if a folder is selected, if not then prompt the user to select one
+        - GET(set-folder-and-create) fetch newly created folder path
+        - Reset column step over here
+        - Set current step to 1 since the page is navigating to process detail page
+        - Prints `File Upload -> Process Detail`
+    - `handleBackButtonPressed()`
+        - Navigate back to home/landing page
+        - Prints `HOME <- File Upload`
+    - `handleDirectoryBackward()`
+        - Set current working directory one level back up using GET(directory-backward) 
+        - GET(get-list-of-folders) fetch list of available folders in current working directory
 
-### Folder Selection
+### ProcessingDetail.js
 
-
-### Processing Detail
-
-### Folder Processing
+### FolderProcessing.js
 
 ### Complete
 

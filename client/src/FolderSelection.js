@@ -25,7 +25,6 @@ export default function FolderSelection() {
     const dirIndex = useDirIndexContext();
     const setDirIndex = useSetDirIndexContext();
     const setColumnStep = useSetColumnStepContext();
-
     const setCurrStep = useStateCurrentStepContext();
     const navigate = useNavigate();
 
