@@ -1,6 +1,4 @@
-import React, {
-    useState,
-} from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function RadioButton({ name, id, buttonName='radio-button', buttonPressed, buttonClassName, labelClassName }) {
     const [pressed, setPressed] = useState(false);
@@ -13,6 +11,10 @@ export default function RadioButton({ name, id, buttonName='radio-button', butto
             buttonPressed();
         }
     }
+
+    useEffect(() => {
+        setPressed(false);
+    },[])
 
     return (
         <div className="flex items-center mb-4 ml-16">

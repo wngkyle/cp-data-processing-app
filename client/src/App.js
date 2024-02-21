@@ -3,7 +3,7 @@ import {
   Route,
 } from 'react-router-dom';
 import Home from './Home.js';
-import FolderSelection from './FileUpload.js';
+import FolderSelection from './FolderSelection.js';
 import InputDetail from './ProcessDetail.js';
 import FolderProcessing from './FolderProcessing.js'
 import Complete from './Complete.js';

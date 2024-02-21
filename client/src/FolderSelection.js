@@ -61,7 +61,6 @@ export default function FolderSelection() {
     }
     const handleBackButtonPressed = () => {
         console.log('HOME <- File Upload');
-        setCurrStep(0);
         navigate('/');
     }
 
@@ -77,6 +76,7 @@ export default function FolderSelection() {
             } catch (err) {
                 console.log(err);
             }
+            console.log('Radio button index: ', dirIndex);
         }
     }
 
@@ -99,6 +99,7 @@ export default function FolderSelection() {
                 console.log(err)
             }
         }
+        console.log('Radio button index: ', dirIndex);
     }
 
     // Run after initial rendering
@@ -128,7 +129,7 @@ export default function FolderSelection() {
 
     useEffect(() => {
         makePostRequest();
-        setCurrStep(0);
+        setDirIndex(-1);
     }, [])
     // By passing an empty dependency array, the useEffect() will only run after initial render
     // Passing no dependency array at all, the useEffect() will run after every single render

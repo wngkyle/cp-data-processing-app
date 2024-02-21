@@ -6,11 +6,11 @@ import "./css/Home.css";
 
 export default function Home() {
     const navigate = useNavigate();
-    const setCurrentStep = useStateCurrentStepContext();
+    const setCurrStep = useStateCurrentStepContext();
 
     const handleEnterButtonClicked = () => {
         console.log('HOME -> File Upload');
-        setCurrentStep(1);
+        setCurrStep(0);
         navigate('/folder-selection');
     }
 

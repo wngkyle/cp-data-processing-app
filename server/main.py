@@ -90,7 +90,7 @@ def reading_and_processing():
                 
                 count += 1
                 progressTracker['count'] += 1
-                break
+                
         stage.append(' - Finish Looping Through All Files')
     except:
         stage.append('Error in reading_and_processing(): Error locate in main.py')

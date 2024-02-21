@@ -6,23 +6,16 @@ import Button from "./component/Button.js";
 import './css/Complete.css';
 import { useNavigate } from "react-router-dom";
 import { FaCircleCheck } from "react-icons/fa6";
-import { useSetColumnStepContext } from "./context/ColumnStepContext.js";
+import { useStateCurrentStepContext  } from "./context/StepContext.js";
 
 
 export default function Complete() {
     const [newFolderPath, setNewFolderPath] = useState('');
     const navigate = useNavigate();
-    const setColumnStep = useSetColumnStepContext();
+    const setCurrentStep = useStateCurrentStepContext();
 
     const handleProcessNextFileButtonPressed = async () => {
-        setColumnStep({
-            'Isc_20mA': 0,
-            'Turn_off_80mA_': 0,
-            'Turn_off_80mA_HL': 0,
-            'Rf': 0,
-            'Rr': 0,
-            'fast-track' : false,
-        });
+        setCurrentStep(1);
         const response = await axios.get('http://127.0.0.1:5000//reset-all-data', { withCredentials: false });
         console.log(response.data);
         navigate('/folder-selection');
