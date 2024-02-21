@@ -4,7 +4,7 @@ import {
 } from 'react-router-dom';
 import Home from './Home.js';
 import FolderSelection from './FolderSelection.js';
-import InputDetail from './ProcessDetail.js';
+import ProcessDetail from './ProcessDetail.js';
 import FolderProcessing from './FolderProcessing.js'
 import Complete from './Complete.js';
 import Error from './Error.js';
@@ -23,7 +23,7 @@ export default function App() {
               <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/folder-selection' element={<FolderSelection />} />
-                <Route path='/process-detail' element={<InputDetail />} />
+                <Route path='/process-detail' element={<ProcessDetail />} />
                 <Route path='/folder-processing' element={<FolderProcessing />} />
                 <Route path='/complete' element={<Complete />} />
                 <Route path='*' element={<Error />} />
