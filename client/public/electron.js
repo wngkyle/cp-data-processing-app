@@ -15,6 +15,8 @@ Another way of executing python script from javascript:
 */
 
 const createWindow = () => {
+    const __dirname = dirname(fileURLToPath(import.meta.url));
+    console.log('Current Directory Path:', __dirname);
     mainWindow = new BrowserWindow({
         width: 1024,
         height: 1024,
@@ -25,7 +27,6 @@ const createWindow = () => {
         mainWindow.loadURL('http://localhost:3000');
         console.log("DEVELOPMENT MODE");
     } else { // Load index.html file if in offline mode
-        const __dirname = dirname(fileURLToPath(import.meta.url));
         console.log('__dirname: ', __dirname);
         mainWindow.loadURL(`file://${path.join(__dirname, './../build/index.html')}`);
         console.log('Final file path: ', `file://${path.join(__dirname, './../build/index.html')}`);
