@@ -60,13 +60,18 @@
   },
   "build": {
     "mac": {
-       "icon": "./public/icon.icns" 
+      "icon": "./public/icon.icns" 
      },
      "win": { 
-       "icon": "./public/favicon3.ico"
+      "icon": "./public/favicon3.ico"
      },
      "linux": {
-       "icon": "./public/logo512.png"
-     }
+      "icon": "./public/logo512.png"
+     },
+     "files": [
+      "build/**/*",
+      "server/**/*",
+      "public/electron.js"
+    ]
   }
 }

@@ -2,7 +2,7 @@ import { app, BrowserWindow } from 'electron';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import isDev from 'electron-is-dev';
-import { PythonShell } from 'python-shell'
+import { PythonShell } from 'python-shell';
 
 let mainWindow = null
 
