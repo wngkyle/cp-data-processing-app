@@ -19,15 +19,13 @@ This project is a cross-platform desktop application designed to optimize the an
  - Automated Data Visualization: Generates insightful graphs and plots based on user-selected parameters, making complex data easy to interpret.
  - Cross-Platform Compatibility: Runs on both Windows and macOS, enabling seamless use across different systems in the lab.
 
+<br>
+<br>
+
 <p align="center">
   <img src="https://github.com/user-attachments/assets/be33b5af-34df-4665-9662-ddd24d26784e" width="600">
-</p>
-
-
-<p align="center">
   <img src="https://github.com/user-attachments/assets/30c5989c-01c8-4c70-bfff-4432a7c80320" width="600">
 </p>
-
 
 <br>
 <br>
