@@ -20,8 +20,12 @@ This project is a cross-platform desktop application designed to optimize the an
  - Cross-Platform Compatibility: Runs on both Windows and macOS, enabling seamless use across different systems in the lab.
 
 
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
 > **Note:** This repository contains the **very initial prototype** of the software, developed as a proof of concept. The actual production code for the application is proprietary and cannot be publicly released due to confidentiality restrictions.
-
-
-
-
