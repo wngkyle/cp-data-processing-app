@@ -1,13 +1,5 @@
 # Chip Probe Data Processing & Analysis Tool
 
-### Table of Contents
-
-- [Overview](#overview)
-- [Features](#features)
-- [Algorithm](#algorithm)
-- [Built With](#built-with)
-- [Technologies Used](#technologies-used)
-
 ### Overview
 
 This project is a cross-platform desktop application designed to optimize the analysis and visualization of chip probing test data. By automating data processing, it enhances team productivity and significantly reduces the time required for engineers to process and interpret large batches of data.
