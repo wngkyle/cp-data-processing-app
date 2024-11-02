@@ -25,7 +25,7 @@ This project is a cross-platform desktop application designed to optimize the an
 
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/30c5989c-01c8-4c70-bfff-4432a7c80320">
+  <img src="https://github.com/user-attachments/assets/30c5989c-01c8-4c70-bfff-4432a7c80320" width="500">
 </p>
 
 
