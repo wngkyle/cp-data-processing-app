@@ -1,0 +1,17 @@
+.homeContainer {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* border: 0.2rem solid blue */
+}
+
+.welcomeText {
+    @apply font-mono font-bold text-5xl;
+}
+
+.enterButton {
+    margin-top: 5rem;
+    /* background-color: #66B2FF; */
+}

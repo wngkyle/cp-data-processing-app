@@ -1,0 +1,16 @@
+.navBarContainer {
+    margin-top: 4rem;
+    margin-left: 6rem;
+    margin-right: 6rem;
+}
+
+.progressBarStepHeader {
+    flex-direction: row;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+}
+
+.text {
+    font-weight: 200;
+    @apply font-mono 
+}
