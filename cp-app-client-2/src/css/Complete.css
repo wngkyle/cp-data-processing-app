@@ -1,0 +1,22 @@
+.completeContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.completeHeader {
+    margin-bottom: 1rem;
+    @apply font-mono font-bold text-7xl;
+}
+
+.contentContainer {
+    background-color: #DEDCFF;
+    padding: 1.5rem;
+    border-radius: 2rem;
+}
+
+.text1 {
+    @apply font-mono font-extrabold text-lg
+}

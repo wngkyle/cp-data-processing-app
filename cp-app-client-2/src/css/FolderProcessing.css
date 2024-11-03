@@ -1,0 +1,30 @@
+.folderProcessingContainer {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin: auto;
+    margin-top: 4.5rem;
+}
+
+.contentContainer {
+    background-color: #DEDCFF;
+    padding: 1.5rem;
+    border-radius: 2rem;
+}
+
+.selectionContainer {
+    padding-bottom: 1rem;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    padding-top: 0.5rem;
+    background-color: #EFEFF0;
+    border-radius: 1rem;
+}
+
+/* .horizontalDivider {
+
+} */
+
+.text {
+    @apply font-mono font-extrabold text-2xl
+}
