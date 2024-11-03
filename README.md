@@ -26,4 +26,4 @@ This project is a cross-platform desktop application designed to optimize the an
 <br>
 
 
-> **Note:** This repository contains the **very initial prototype** of the software, developed as a proof of concept. The actual production code for the application is proprietary and cannot be publicly released.
+> **Note:** This repository contains the **very initial prototype** of the software, developed as a proof of concept.
