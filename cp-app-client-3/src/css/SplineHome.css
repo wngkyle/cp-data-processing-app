@@ -1,0 +1,46 @@
+.home2Container {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20rem;
+
+
+    border: 0.2rem solid black;
+
+}
+
+.header-1 {
+    display: flex;
+    line-height: 3.8rem;
+    font-family: sans-serif;
+    font-weight: bolder;
+    font-size: 3rem;
+    color: #4a7702;
+}
+
+.helloTextContainer {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.helloText {
+    position: relative;
+    /* width: 100%; */
+    height: 2rem;
+    line-height: 2rem;
+    color: black;
+    font-size: 2em;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    will-change: transform, opacity;
+    overflow: hidden;
+}
+
+.helloText > div {
+    padding-right: 0.05em;
+    overflow: hidden;
+}
